@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixelHide Toggle</title>
+<style>
+  body {
+    background-color: #0f0f0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+  }
+
+  #status {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 50px;
+    transition: color 0.3s;
+  }
+
+  #toggle-btn {
+    font-size: 6rem;
+    background-color: #1de9b6;
+    border: 5px solid #00f;
+    border-radius: 30px;
+    padding: 40px 60px;
+    cursor: pointer;
+    color: #0f0f0f;
+    text-align: center;
+    text-shadow: 2px 2px 0px #000, 0px 0px 5px #00f;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 -5px 0 rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  #toggle-btn:active {
+    transform: translateY(5px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 -5px 0 rgba(0,0,0,0.2);
+  }
+
+  #interim {
+    font-size: 1.5rem;
+    color: #aaa;
+    margin-top: 20px;
+    height: 40px;
+  }
+</style>
+</head>
+<body>
+
+<div id="status">Offline</div>
+<div id="toggle-btn">⏻</div>
+<div id="interim"></div>
+
+<script>
+let online = false;
+const statusEl = document.getElementById('status');
+const interimEl = document.getElementById('interim');
+const btn = document.getElementById('toggle-btn');
+
+btn.addEventListener('click', () => {
+    if (btn.disabled) return;
+
+    if (!online) {
+        // Wechsel von Offline -> Startet... -> Online
+        const delay = Math.random() * (30000 - 500) + 500; // 0.5 - 30s
+        interimEl.textContent = "Startet...";
+        btn.disabled = true;
+        setTimeout(() => {
+            online = true;
+            statusEl.textContent = "Online";
+            statusEl.style.color = "#22c55e"; // Grün
+            interimEl.textContent = "";
+            btn.disabled = false;
+        }, delay);
+    } else {
+        // Wechsel von Online -> Stoppt... -> Offline
+        const delay = Math.random() * (15000 - 100) + 100; // 0.1 - 15s
+        interimEl.textContent = "Stoppt...";
+        btn.disabled = true;
+        setTimeout(() => {
+            online = false;
+            statusEl.textContent = "Offline";
+            statusEl.style.color = "#f87171"; // Rot
+            interimEl.textContent = "";
+            btn.disabled = false;
+        }, delay);
+    }
+});
+</script>
+
+</body>
+</html>
