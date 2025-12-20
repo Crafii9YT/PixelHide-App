@@ -45,13 +45,12 @@
     header {
       position: relative;
       z-index: 1;
-      padding: 80px 20px 80px;
+      padding: 80px 20px;
       text-align: center;
     }
 
     header img {
       max-width: 200px;
-      height: auto;
     }
 
     header p {
@@ -64,7 +63,6 @@
     .cta {
       display: inline-flex;
       gap: 16px;
-      flex-wrap: wrap;
       justify-content: center;
     }
 
@@ -74,7 +72,8 @@
       font-weight: 600;
       text-decoration: none;
       transition: all .25s ease;
-      position: relative;
+      cursor: pointer;
+      border: none;
     }
 
     .btn-primary {
@@ -85,17 +84,12 @@
 
     .btn-primary:hover {
       transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 18px 50px rgba(167,139,250,0.6);
     }
 
     .btn-outline {
       border: 1px solid rgba(167,139,250,0.4);
       color: var(--text);
-      backdrop-filter: blur(6px);
-    }
-
-    .btn-outline:hover {
-      background: rgba(167,139,250,0.15);
+      background: transparent;
     }
 
     section {
@@ -117,20 +111,6 @@
       border-radius: 22px;
       padding: 26px;
       border: 1px solid rgba(167,139,250,0.15);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      transition: all .3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(167,139,250,0.25);
-      border-color: rgba(167,139,250,0.4);
-    }
-
-    .card h3 {
-      font-family: 'Orbitron', sans-serif;
-      margin-top: 0;
-      color: #ddd6fe;
     }
 
     footer {
@@ -144,39 +124,93 @@
       color: var(--primary);
       font-weight: 600;
     }
+
+    /* POPUP */
+    .popup-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .popup {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 30px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      border: 1px solid rgba(167,139,250,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+
+    .popup h2 {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 25px;
+      color: #ddd6fe;
+    }
+
+    .popup .btn {
+      width: 100%;
+      margin-bottom: 14px;
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="logo.png" alt="PixelHide Logo">
-    <p>Die neue PixelHide App ist da! Joine mit Konsole, sehe Events sofort und sei sicher unterwegs auf PixelHide! Der neue Weg um PixelHide zu erkunden und Freunde zu finden!</p>
-    <div class="cta">
-      <a href="#download" class="btn btn-primary">Jetzt starten</a>
-      <a href="https://discord.pixelhide.net" class="btn btn-outline">Discord</a>
-    </div>
-  </header>
+<header>
+  <img src="logo.png" alt="PixelHide Logo">
+  <p>Die neue PixelHide App ist da! Joine mit Konsole, sehe Events sofort und sei sicher unterwegs auf PixelHide!</p>
+  <div class="cta">
+    <button class="btn btn-primary" onclick="openPopup()">Jetzt starten</button>
+    <a href="https://discord.pixelhide.net" class="btn btn-outline">Discord</a>
+  </div>
+</header>
 
-  <section>
-    <div class="grid">
-      <div class="card">
-        <h3>🔒 Sicher</h3>
-        <p>Der sicherste Weg um News und Events mitzubekommen!</p>
-      </div>
-      <div class="card">
-        <h3>✨ Neu</h3>
-        <p>Die App ist brandneu und wird aktiv aktuallisiert!</p>
-      </div>
-      <div class="card">
-        <h3>🌐 Join mit Konsole</h3>
-        <p>Joine easy mit Konsole auf PixelHide.net mithilfe unserer neuen Built-In Server Funktion in der App!</p>
-      </div>
+<section>
+  <div class="grid">
+    <div class="card">
+      <h3>🔒 Sicher</h3>
+      <p>Der sicherste Weg um News und Events mitzubekommen!</p>
     </div>
-  </section>
+    <div class="card">
+      <h3>✨ Neu</h3>
+      <p>Die App ist brandneu und wird aktiv aktualisiert!</p>
+    </div>
+    <div class="card">
+      <h3>🌐 Join mit Konsole</h3>
+      <p>Joine easy mit Konsole auf PixelHide.net über die App!</p>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    © 2025 <span>PixelHide</span> · Nicht in Verbindung mit Mojang AB.
-  </footer>
+<footer>
+  © 2025 <span>PixelHide</span> · Nicht in Verbindung mit Mojang AB.
+</footer>
+
+<!-- POPUP -->
+<div class="popup-bg" id="popup">
+  <div class="popup">
+    <h2>Verbinden mit</h2>
+    <button class="btn btn-primary" onclick="window.open('http://pixelhide.net/join.html','_blank')">Java</button>
+    <button class="btn btn-primary" onclick="window.location.href='minecraft://?server=pixelhide.net&port=19132'">Bedrock</button>
+    <button class="btn btn-primary" onclick="window.location.href='connect.html'">Konsole</button>
+    <button class="btn btn-outline" onclick="closePopup()">Abbrechen</button>
+  </div>
+</div>
+
+<script>
+function openPopup() {
+  document.getElementById('popup').style.display = 'flex';
+}
+function closePopup() {
+  document.getElementById('popup').style.display = 'none';
+}
+</script>
 
 </body>
 </html>
